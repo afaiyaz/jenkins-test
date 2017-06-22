@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  engage-app:
-      image: engage-app
+  web:
+      image: jenkins-test
       network_mode: "bridge"
       ports:
         - 9052:80
