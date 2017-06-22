@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  engage-app:
+      image: engage-app
+      network_mode: "bridge"
+      ports:
+        - 9052:80
+        - 9053:443
