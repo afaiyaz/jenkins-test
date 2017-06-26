@@ -1,66 +1,34 @@
+node('jenkins-test') {
+    stage('Initialize') {
+        echo 'Initializing...'
+        def node = tool name: 'Node-8.1.2', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+        env.PATH = "${node}/bin:${env.PATH}"
+    }
 
-node('node') {
+    stage('Checkout') {
+        echo 'Getting source code...'
+        checkout scm
+    }
 
+    stage('Build') {
+        echo 'Building dependencies...'
+        sh 'npm i'
+    }
 
-    // currentBuild.result = "SUCCESS"
+    stage('Test') {
+        echo 'Testing...'
+        sh 'npm test'
+    }
 
-    // try {
-
-       stage('Checkout'){
-
-          checkout scm
-       }
-
-       stage('Build'){
-          sh 'node -v'
-          sh 'npm prune'
-          sh 'npm install'
-       }
-       stage('Test'){
-         sh 'yarn test'
-       }
-
-       stage('Build Docker'){
-        docker.build('')
-       }
-
-       // stage('Deploy'){
-
-       //   echo 'Push to Repo'
-       //   sh './dockerPushToRepo.sh'
-
-       //   echo 'ssh to web server and tell it to pull new image'
-       //   sh 'ssh deploy@xxxxx.xxxxx.com running/xxxxxxx/dockerRun.sh'
-
-       // }
-
-       // stage('Cleanup'){
-
-       //   echo 'prune and cleanup'
-       //   sh 'npm prune'
-       //   sh 'rm node_modules -rf'
-
-       //   mail body: 'project build successful',
-       //               from: 'xxxx@yyyyy.com',
-       //               replyTo: 'xxxx@yyyy.com',
-       //               subject: 'project build successful',
-       //               to: 'yyyyy@yyyy.com'
-       // }
-
-
-
-    // }
-    // catch (err) {
-
-    //     currentBuild.result = "FAILURE"
-
-    //         mail body: "project build error is here: ${env.BUILD_URL}" ,
-    //         from: 'xxxx@yyyy.com',
-    //         replyTo: 'yyyy@yyyy.com',
-    //         subject: 'project build failed',
-    //         to: 'zzzz@yyyyy.com'
-
-    //     throw err
-    // }
-
+    stage('Publish') {
+        echo 'Publishing Test Coverage...'
+        publishHTML (target: [
+            allowMissing: false,
+            alwaysLinkToLastBuild: false,
+            keepAll: true,
+            reportDir: 'coverage/lcov-report',
+            reportFiles: 'index.html',
+            reportName: "Application Test Coverage"
+        ])
+    }
 }
