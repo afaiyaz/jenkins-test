@@ -5,5 +5,5 @@ services:
       image: jenkins-test
       network_mode: "bridge"
       ports:
-        - 9052:80
-        - 9053:443
+        - 80:80
+        - 443:443
