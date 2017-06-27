@@ -20,7 +20,11 @@ node('jenkins-slave') {
         sh 'npm test'
     }
 
-    stage('deploy') {
+    stage('Bundle') {
+        sh 'npm run-script build'
+    }
+
+    stage('Deploy') {
         echo 'Publishing Test Coverage...'
         sh 'docker build . -t jenkins-test'
         sh 'docker-compose up'
