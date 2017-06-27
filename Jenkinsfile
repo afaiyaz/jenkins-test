@@ -1,7 +1,7 @@
-node('testing') {
+node('jenkins-slave') {
     stage('Initialize') {
         echo 'Initializing...'
-        def node = tool name: 'node', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+        def node = tool name: 'node-js', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
         env.PATH = "${node}/bin:${env.PATH}"
     }
 
