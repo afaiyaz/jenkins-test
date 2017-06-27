@@ -27,6 +27,6 @@ node('jenkins-slave') {
     stage('Deploy') {
         echo 'Publishing Test Coverage...'
         sh 'docker build . -t jenkins-test'
-        sh 'docker-compose up'
+        sh 'docker-compose up -d'
     }
 }
