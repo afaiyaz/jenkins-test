@@ -11,18 +11,18 @@ node('jenkins-slave') {
             checkout scm
         }
 
-        stage('Build') {
+        stage('Install Dependencies') {
             echo 'Building dependencies...'
-            sh 'npm i'
+            sh 'yarn install'
         }
 
         stage('Test') {
             echo 'Testing...'
-            sh 'npm test'
+            sh 'yarn test'
         }
 
         stage('Bundle') {
-            sh 'npm run-script build'
+            sh 'yarn build'
         }
 
         stage('Deploy') {
