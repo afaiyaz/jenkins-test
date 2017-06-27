@@ -16,7 +16,7 @@ ADD nginx/engage.crt /etc/nginx/cert/engage.crt
 ADD nginx/engage.key /etc/nginx/cert/engage.key
 ADD nginx/dhparam.pem /etc/nginx/cert/dhparam.pem
 
-COPY build/ /usr/local/pge-engage/build
+COPY build /usr/local/pge-engage/build
 
 RUN ln -s /usr/local/pge-engage/build/ /srv/www
 
