@@ -20,15 +20,9 @@ node('jenkins-slave') {
         sh 'npm test'
     }
 
-    stage('Publish') {
+    stage('deploy') {
         echo 'Publishing Test Coverage...'
-        publishHTML (target: [
-            allowMissing: false,
-            alwaysLinkToLastBuild: false,
-            keepAll: true,
-            reportDir: 'coverage/lcov-report',
-            reportFiles: 'index.html',
-            reportName: "Application Test Coverage"
-        ])
+        sh 'docker build . -t jenkins-test'
+        sh 'docker-compose up'
     }
 }

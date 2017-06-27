@@ -16,11 +16,8 @@ ADD nginx/engage.crt /etc/nginx/cert/engage.crt
 ADD nginx/engage.key /etc/nginx/cert/engage.key
 ADD nginx/dhparam.pem /etc/nginx/cert/dhparam.pem
 
-COPY . /usr/local/pge-engage
-WORKDIR /usr/local/pge-engage
+COPY ./build /usr/local/pge-engage/build
 
-RUN ["yarn", "install"]
-RUN ["npm", "run-script", "build"]
 RUN ln -s /usr/local/pge-engage/build/ /srv/www
 
 EXPOSE 80
